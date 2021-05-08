@@ -4,6 +4,7 @@ import { Type, useRecord } from 'hooks/useRecord';
 import { useTags } from 'hooks/useTags';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Modal } from 'antd';
 
 const EditTagsWrapper = styled.div`
 overflow:auto;
@@ -56,7 +57,7 @@ const defaultFormData = {
 
 const EditTags: React.FC = () => {
     const [selected, setSelected] = useState(defaultFormData);
-    const { tags, addTag, removeTag: _removeTag, updateTag } = useTags();
+    const { tags, addTag, removeTag: _removeTag, updateTag:_updateTag } = useTags();
     const { removeTagRecords } = useRecord();
     const tagList = tags.filter(tag => tag.type === selected.types)
    
@@ -65,7 +66,11 @@ const EditTags: React.FC = () => {
     }
     const createTag = () => {
         const tagName = window.prompt('标签名');
-        addTag(tagName);
+        if(tagName) addTag(tagName);
+    }
+    const updateTag = (tagId: number) => {
+        const tagName = window.prompt('标签名');
+        if(tagName) _updateTag(tagId, tagName);
     }
     const removeTag = (tagId: number) => {
         _removeTag(tagId);
