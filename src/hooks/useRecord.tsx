@@ -17,18 +17,15 @@ export const useRecord = () => {
     useEffect(() => { 
         const localRecords = JSON.parse(window.localStorage.getItem('records') || '[]');
         setRecords(localRecords);
-        console.log(11,"get records:", records, "JSON.parse(window.localStorage.getItem('records') || '[]'):", localRecords)
     }, [])
     useEffect(() => {
         window.localStorage.setItem('records', JSON.stringify(records));
-        console.log(22,"set records:",records)
     }, [records])
 
     const addRecord = (record: RecordItem) => {
         setRecords([ ...records, record ]);
     }
     const removeTagRecords = (tagId: number) => {
-        console.log(tagId)
         setRecords(records.filter(item => item.tagId !== tagId));
     }
     const computeGroupedList = (yearMonth?:String) => {

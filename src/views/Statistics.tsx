@@ -187,7 +187,6 @@ const Statistics: React.FC = (props: any) => {
     }
     const leaderListDom = () => {
         let content;
-        console.log(11, leaderList)
         content = leaderList.map((item, index) =>
                         <li key={index.toString()}>
                             <div className="bord-list">                       

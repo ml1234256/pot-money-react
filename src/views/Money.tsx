@@ -15,7 +15,7 @@ const defaultFormData = {
     amount: '0.00',
     createdAt: today as string,
 }
-console.log(defaultFormData.createdAt)
+
 const Money: React.FC = () => {
     const [selected, setSelected] = useState(defaultFormData);
     const { addRecord } = useRecord();

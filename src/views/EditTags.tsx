@@ -5,45 +5,49 @@ import { useTags } from 'hooks/useTags';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
+
 
 const EditTagsWrapper = styled.div`
-overflow:auto;
-scrollbar-width: none; /* Firefox 64 */
-    &::-webkit-scrollbar {
-        display: none;
-    } 
-.tagList{
-    > li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgb(211, 211, 211);
-        height: 40px;
-        font-size: 16px;
-        padding: 0 12px 0 16px;
+    overflow:auto;
+    scrollbar-width: none; /* Firefox 64 */
+        &::-webkit-scrollbar {
+            display: none;
         }
-    }
-    .edit{
-            display: flex;  
+
+    .tagList{
+        > li {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            color:#444;
-            > div {
-                padding-left: 8px;
+            border-bottom: 1px solid rgb(211, 211, 211);
+            height: 40px;
+            font-size: 16px;
+            padding: 0 12px 0 16px;
             }
         }
-    .remove {
-        font-size: 20px;
-        color: #f00;
-    }
-    .createTag {
-        background: rgb(0, 115, 192);
-        border: none;
-        border-radius: 4px;
-        color: #fff;
-        font-size: 15px;
-        margin: 80px auto;
-        padding: 6px 12px;
-    }
+        .edit{
+                display: flex;  
+                align-items: center;
+                color:#444;
+                > div {
+                    padding-left: 8px;
+                }
+            }
+        .remove {
+            font-size: 20px;
+            color: #f00;
+        }
+        .createTag {
+            background: rgb(0, 115, 192);
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 15px;
+            margin: 80px auto;
+            padding: 6px 12px;
+        }
 `;
 
 const defaultFormData = {
@@ -60,7 +64,10 @@ const EditTags: React.FC = () => {
     const { tags, addTag, removeTag: _removeTag, updateTag:_updateTag } = useTags();
     const { removeTagRecords } = useRecord();
     const tagList = tags.filter(tag => tag.type === selected.types)
-   
+    const { confirm } = Modal;
+
+
+
     const onChange = (obj: Partial<typeof defaultFormData>) => {
             setSelected({ ...selected, ...obj });
     }
@@ -72,9 +79,27 @@ const EditTags: React.FC = () => {
         const tagName = window.prompt('标签名');
         if(tagName) _updateTag(tagId, tagName);
     }
-    const removeTag = (tagId: number) => {
-        _removeTag(tagId);
-        removeTagRecords(tagId);
+    // const removeTag = (tagId: number) => {
+    //     showConfirm();
+    //     _removeTag(tagId);
+    //     removeTagRecords(tagId);
+    // }
+    function removeTag(tagId: number) {
+    confirm({
+        title: '确认删除标签?',
+        icon: <ExclamationCircleOutlined />,
+        content: '删除标签会同时删除该标签下的所有记账',
+        okText: '确认',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk() {
+            _removeTag(tagId);
+            removeTagRecords(tagId);
+        },
+        onCancel() {
+            return;
+        },
+    });
     }
 
     return (
