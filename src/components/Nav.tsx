@@ -6,17 +6,20 @@ const NavWrapper = styled.nav`
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
     >ul {
             display: flex;
-            padding: 5px 0 2px 0;
+            padding-top: 6px;
             
         > li {
                 flex-grow: 1;
+                margin-bottom:-10px;
             > a{
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 line-height: 1.5;
+                color: inherit;
                 .icon {
+                    fill: inherit;
                     width: 28px;
                     height: 28px;
                 }
