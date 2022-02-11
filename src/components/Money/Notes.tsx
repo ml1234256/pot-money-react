@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from 'react';
+// import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
 
@@ -19,12 +19,12 @@ const Notes = (props: any) => {
     const note = props.defaultNotes;
 
 
-    const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        props.onChange(e.target.value);
-    }
+    // const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    //     props.onChange(e.target.value);
+    // }
     return (
         <NotesWrapper>
-                <input  type="text" defaultValue={note} onBlur={onChange} placeholder="备注..." className="notes" />
+            <input  type="text" defaultValue={note} onBlur={(e) => props.onChange(e.target.value)} placeholder="备注..." className="notes" />
         </NotesWrapper>
     )
 };

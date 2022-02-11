@@ -44,7 +44,7 @@ const Types: React.FC<Props> = (props) => {
                 {typesList.map(
                     item => <li key={item}
                         className={type === item ? 'selected' : ''}
-                        onClick={() => {props.onChange(item)}}
+                        onClick={() => props.onChange(item)}
                     >
                         {typesMap[item]}
                     </li>

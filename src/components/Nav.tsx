@@ -7,7 +7,7 @@ const NavWrapper = styled.nav`
     >ul {
             display: flex;
             padding-top: 6px;
-            
+           
         > li {
                 flex-grow: 1;
                 margin-bottom:-10px;

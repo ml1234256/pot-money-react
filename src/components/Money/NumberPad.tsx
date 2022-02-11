@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -18,6 +18,7 @@ const Wrapper = styled.div`
         }
     }
     .numPad {
+        margin-bottom:0;
         &::after {
             content: "";
             display: block;
@@ -41,29 +42,32 @@ const Wrapper = styled.div`
                 float: right;
             }
         }
-         .dateWrapper{
+        .num-left{
+            border-left:none;
+        }
+        .dateWrapper{
         //border:1px solid;
         overflow:hidden;
         position: relative;
-        .dateText{
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            background: #fff;
-            pointer-events: none;
-            line-height: 52px;
-            font-size:16px;
-            width: 100%;
-            height: 100%;
+            .dateText{
+                position: absolute;
+                right: 0px;
+                top: 0px;
+                background: #fff;
+                pointer-events: none;
+                line-height: 52px;
+                font-size:16px;
+                width: 100%;
+                height: 100%;
+            }
+            .date {
+                position: absolute;
+                height:100%;
+                right:28px;
+                top:0px;
+                border:none;
+            }
         }
-        .date {
-            position: absolute;
-            height:100%;
-            right:28px;
-            top:0px;
-            border:none;
-        }
-    }
     }
 `;
 
@@ -78,27 +82,21 @@ const NumberPad = (props:any) => {
         _setOutput(output);
         props.onChange(output);
     }
-    // useEffect(() => {
-    //     (
-    //         document.querySelector('.date') as HTMLInputElement).valueAsDate = new Date(props.defaultDate);
-    // }, [])
     useEffect(() => {
         const dateText = document.querySelector('.dateText') as HTMLDivElement;
         if (dateText.innerHTML === '今天') {
             dateText.style.fontSize = '20px';
         } else {
-            dateText.style.fontSize = '16px';
+            dateText.style.fontSize = '18px';
         }
     }, [props.createdAt])
     const getDate = () => {
         const today = dayjs().format('YYYY-MM-DD');
-        return props.createdAt === today ? '今天' : props.createdAt;
+        return props.createdAt === today ? '今天' : props.createdAt.slice(5);
     }
-    const onChangeDate: ChangeEventHandler<HTMLInputElement> = (e) => {
-            props.onChangeDate(e.target.value);
-        }
     const onClickButtonWrapper = (e: React.MouseEvent) => {
         const input = (e.target as HTMLButtonElement).textContent as string;
+        console.log(input);
         const indexOfPoint = output.indexOf('.');
         if (input === '') return;
         if ('0123456789.'.indexOf(input) >= 0) {
@@ -130,7 +128,7 @@ const NumberPad = (props:any) => {
                     return;
                 }  
             } else {
-                setOutput(output.slice(0, -1));
+                setOutput(output.slice(0,-1));
             }
         } else if (input === 'AC') {
             setOutput('0.00');
@@ -143,14 +141,14 @@ const NumberPad = (props:any) => {
     return (
         <Wrapper>
             <div className="outputBox">
-                <span className="output">{ output }</span>
+                <span className="output">{ output }</span> 
             </div>
             <ul className="numPad" onClick={onClickButtonWrapper}>
                  <li className="num-left">1</li>
                     <li>2</li>
                     <li>3</li>
                     <li className="dateWrapper">
-                        <input  type="date" onChange={onChangeDate} className="date" />          
+                        <input  type="date" onChange={(e) =>  props.onChangeDate(e.target.value)} className="date" />          
                     <div className="dateText">{ getDate() }</div>
                     </li>
 
@@ -164,12 +162,11 @@ const NumberPad = (props:any) => {
                     <li>9</li>
                     <li className="ok">确认</li>
 
-                    <li>.</li>    
+                    <li className="num-left">.</li>    
                     <li>0</li>
                     <li>del</li>
             </ul>
         </Wrapper>
-
     )
 };
 

@@ -24,7 +24,6 @@ const Money: React.FC = () => {
         setSelected({ ...selected, ...obj });
     }
     const submit = () => {
-        ('submit');
         if (selected.tagId === 0) {
             window.alert('请选择标签');
             return;
@@ -42,6 +41,7 @@ const Money: React.FC = () => {
                 onChange={(amount: string) => onChange({ amount })}
                 onChangeDate={(createdAt: string) => onChange({ createdAt })}
                 onOK={submit} />
+            {JSON.stringify(selected)}
         </Layout>
     )
 }
