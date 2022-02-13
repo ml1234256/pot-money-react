@@ -29,7 +29,7 @@ export const useTags = () => {
         window.localStorage.setItem('tags', JSON.stringify(tags));
     }, [tags]);
     
-    const addTag = (tagName:string) => {
+    const addTag = (tagName:string, type:'+'|'-') => {
         const names = tags.map(tag => tag.name);
         tagName = tagName.replace(/\s+/g, "");
         if ( tagName === '') return;
@@ -37,7 +37,7 @@ export const useTags = () => {
             window.alert('标签名已存在');
         } else {
             if (tagName.length <= 4) {
-                 setTags([...tags, {id: createId(), type:'-', name:tagName}]);
+                 setTags([...tags, {id: createId(), type:type, name:tagName}]);
             } else {
                 window.alert('请输入小于4个字的标签名')
             }

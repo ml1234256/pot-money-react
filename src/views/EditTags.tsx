@@ -51,9 +51,9 @@ const EditTagsWrapper = styled.div`
 `;
 
 const defaultFormData = {
+    type: '-' as Type,
     tagIds: [] as number[],
     notes: '',
-    types: '-' as Type,
     amount: '0.00',
     createdAt: '',
 }
@@ -63,7 +63,7 @@ const EditTags: React.FC = () => {
     const [selected, setSelected] = useState(defaultFormData);
     const { tags, addTag, removeTag: _removeTag, updateTag:_updateTag } = useTags();
     const { removeTagRecords } = useRecord();
-    const tagList = tags.filter(tag => tag.type === selected.types)
+    const tagList = tags.filter(tag => tag.type === selected.type)
     const { confirm } = Modal;
 
 
@@ -73,17 +73,12 @@ const EditTags: React.FC = () => {
     }
     const createTag = () => {
         const tagName = window.prompt('标签名');
-        if(tagName) addTag(tagName);
+        if(tagName) addTag(tagName, selected.type);
     }
     const updateTag = (tagId: number) => {
         const tagName = window.prompt('标签名');
         if(tagName) _updateTag(tagId, tagName);
     }
-    // const removeTag = (tagId: number) => {
-    //     showConfirm();
-    //     _removeTag(tagId);
-    //     removeTagRecords(tagId);
-    // }
     function removeTag(tagId: number) {
     confirm({
         title: '确认删除标签?',
@@ -104,7 +99,7 @@ const EditTags: React.FC = () => {
 
     return (
         <Layout>
-            <Types value={selected.types} onChange={types => onChange({ types })} />
+            <Types value={selected.type} onChange={type => onChange({ type })} />
             <EditTagsWrapper>
                 <ul className="tagList">
                     {
