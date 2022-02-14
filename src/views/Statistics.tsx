@@ -48,7 +48,7 @@ const LeaderBoard = styled.ul`
         >.bord-list {
             width: 90%;
             font-size: 16px;
-            padding-top:10px;
+            margin-top:20px;
             display:flex;
             >.tag {
         
@@ -68,8 +68,8 @@ const LeaderBoard = styled.ul`
         }
         >.bar {
             width:90%;
-            margin-top: 4px;
-            margin-bottom: 4px;
+            margin-top: -10px;
+            margin-bottom: 10px;
             padding:0;
         }
         .ant-progress-inner {
