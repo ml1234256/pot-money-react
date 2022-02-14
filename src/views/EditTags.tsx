@@ -80,21 +80,21 @@ const EditTags: React.FC = () => {
         if(tagName) _updateTag(tagId, tagName);
     }
     function removeTag(tagId: number) {
-    confirm({
-        title: '确认删除标签?',
-        icon: <ExclamationCircleOutlined />,
-        content: '删除标签会同时删除该标签下的所有记账',
-        okText: '确认',
-        okType: 'danger',
-        cancelText: '取消',
-        onOk() {
-            _removeTag(tagId);
-            removeTagRecords(tagId);
-        },
-        onCancel() {
-            return;
-        },
-    });
+        confirm({
+            title: '确认删除标签?',
+            icon: <ExclamationCircleOutlined />,
+            content: '删除标签会同时删除该标签下的所有记账',
+            okText: '确认',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+                _removeTag(tagId);
+                removeTagRecords(tagId);
+            },
+            onCancel() {
+                return;
+            },
+        });
     }
 
     return (

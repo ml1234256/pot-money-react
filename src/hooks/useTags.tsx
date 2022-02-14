@@ -47,16 +47,16 @@ export const useTags = () => {
         setTags(tags.filter(tag => tag.id !== id));
     }
     const updateTag = (id: number, tagName: string) => {
-        const names = tags.map(tag => tag.name);
-        const newName = tagName.replace(/\s+/g, "");
         const needUpdateTag = tags.filter(tag => tag.id === id)[0];
+        const names = tags.filter(tag => tag.type === needUpdateTag.type).map(tag => tag.name);
+        const newName = tagName.replace(/\s+/g, "");
 
         if (newName === '') return;
-        if (names.indexOf(tagName) >= 0 && needUpdateTag.name !== tagName) {
+        if (names.indexOf(newName) >= 0) {
             window.alert('标签名已存在');
         } else {
             if (newName.length <= 4) {
-                    setTags(tags.map(tag => tag.id === id ? {id:id, type: '-', name:newName} : tag));
+                    setTags(tags.map(tag => tag.id === id ? {id:id, type: needUpdateTag.type, name:newName} : tag));
                 } else {
                         window.alert('请输入小于4个字的标签名')
                 }
