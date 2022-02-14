@@ -8,6 +8,7 @@ import { Progress } from 'antd';
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import dayjs from "dayjs";
+import {roundNum as roundAmount} from '../lib/roundNum';
  
 const ContentWrapper = styled.div`
     overflow:auto;
@@ -87,9 +88,7 @@ const Statistics: React.FC = (props: any) => {
         if (chartRef.current) {
             chartRef.current.scrollLeft = chartRef.current.scrollWidth;
         }
-       
     },[])
-
     const computedLeaderList = () => {
         const tagList = tags.filter(tag => tag.type === type);
         const recordList = records.filter((item: RecordItem) => item.type === type);
@@ -192,7 +191,7 @@ const Statistics: React.FC = (props: any) => {
                             <div className="bord-list">                       
                                 <span className="tag"> {findTagName(item.tagId)} </span>
                                 <span className="percent"> {(Math.round((item.total / totalMount()) * 1000) / 10) + '%'} </span>
-                                <span className="total">{item.total} </span>
+                                <span className="total">{roundAmount(item.total)} </span>
                             </div>
                             <Progress percent={item.total / totalMount() * 100}
                                 showInfo={false}
@@ -206,20 +205,18 @@ const Statistics: React.FC = (props: any) => {
         <Layout>
             <Types value={type} onChange={type => onChange( type )} />
             <ContentWrapper>
-            <ChartWrapper ref={chartRef}>
-              <ReactECharts option={chartOptions()} className="chart" />
-            </ChartWrapper>
-            <LeaderBoard>
-                <li>
-                    <div className="total-mount">
-                        {`总${type === '-' ? "支出":"收入"}：${totalMount()}`}
-                    </div>
-                </li>
-                {leaderListDom()}
-               
-            </LeaderBoard>
+                <ChartWrapper ref={chartRef}>
+                    <ReactECharts option={chartOptions()} className="chart" />
+                </ChartWrapper>
+                <LeaderBoard>
+                    <li>
+                        <div className="total-mount">
+                            {`总${type === '-' ? "支出":"收入"}：${roundAmount(totalMount())}`}
+                        </div>
+                    </li>
+                    {leaderListDom()}
+                </LeaderBoard>
             </ContentWrapper>
-          
         </Layout>
     )
 }

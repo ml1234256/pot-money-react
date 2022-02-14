@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { useTags } from "hooks/useTags";
 import { ChangeEventHandler, useState } from 'react';
-
+import {roundNum as roundAmount} from '../lib/roundNum';
 
 const DetailHeader = styled.div`
     display: flex;
@@ -131,9 +131,6 @@ const Detail = () => {
         balance = totalIncome - totalExpend;
         return { totalExpend, totalIncome, balance };
     }
-    const roundAmount = (amount:number) => {
-        return Math.round(amount * 100) / 100;
-    }
     const beautifyDate = (date: string) => {
             const day = dayjs(date);
             const now = dayjs();
@@ -154,10 +151,10 @@ const Detail = () => {
     const beautifyTotal = (expend: number, income: number) => {
             let string = '';
             if (income !== 0) {
-                string = string + '收入：' + income.toString();
+                string = string + '收入：' + roundAmount(income);
             }
             if (expend !== 0) {
-                string = string +' 支出：' + expend.toString();
+                string = string +' 支出：' + roundAmount(expend);
             }
           
             return string;
