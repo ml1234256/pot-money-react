@@ -28,6 +28,10 @@ const Money: React.FC = () => {
             window.alert('请选择标签');
             return;
         }
+        if (selected.amount === '0.00' || selected.amount === '0' || selected.amount === '0.' || selected.amount === '0.0') { 
+            window.alert('请输入金额');
+            return
+        }
         addRecord(selected);
         //setSelected(defaultFormData);
     }
