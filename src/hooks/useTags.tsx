@@ -30,7 +30,8 @@ export const useTags = () => {
     }, [tags]);
     
     const addTag = (tagName:string, type:'+'|'-') => {
-        const names = tags.map(tag => tag.name);
+        const names = tags.filter(tag => tag.type === type).map(tag => tag.name);
+        console.log(type,names)
         tagName = tagName.replace(/\s+/g, "");
         if ( tagName === '') return;
         if (names.indexOf(tagName) >= 0) {

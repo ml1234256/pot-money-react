@@ -41,7 +41,6 @@ const Money: React.FC = () => {
                 onChange={(amount: string) => onChange({ amount })}
                 onChangeDate={(createdAt: string) => onChange({ createdAt })}
                 onOK={submit} />
-            {JSON.stringify(selected)}
         </Layout>
     )
 }
