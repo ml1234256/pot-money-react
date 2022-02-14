@@ -68,7 +68,7 @@ const LeaderBoard = styled.ul`
         }
         >.bar {
             width:90%;
-            margin-top: -10px;
+            margin-top: -8px;
             margin-bottom: 10px;
             padding:0;
         }
